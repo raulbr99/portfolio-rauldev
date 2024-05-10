@@ -1,0 +1,29 @@
+---
+import ExperienceItem from "./ExperienceItem.astro"
+const EXPERIENCE = [
+  {
+    date: "Currently...",
+    title: "Content Creator",
+    company: "Twitch",
+    description:
+      "I share knowledge about programming and web development on various platforms. Awarded as the best non-English content creator in 2022 and the best community in 2023 by GitHub.",
+    link: "https://twitch.tv/midudev",
+  },
+  {
+    date: "September 2022",
+    title: "Principal Frontend Engineer",
+    company: "Adevinta Spain",
+    description:
+      "Responsible for the platform, components, and utilities for creating and developing web applications. Improved software delivery by 30%. Implemented continuous integration and deployment measures with A/B testing across more than 15 teams.",
+  },
+]
+---
+<ol class="relative mt-16">
+  {
+    EXPERIENCE.map((experience) => (
+      <li class="">
+        <ExperienceItem {...experience} />
+      </li>
+    ))
+  }
+</ol>
