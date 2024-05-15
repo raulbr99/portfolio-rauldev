@@ -6,5 +6,9 @@ import robotsTxt from "astro-robots-txt"
 // https://astro.build/config
 export default defineConfig({
   integrations: [tailwind(), robotsTxt()],
-  site: 'https://porfolio.dev/'
+  site: 'https://porfolio-rauldev99.vercel.app/',
+  adapter: vercel({
+    webAnalytics: { enabled: true }
+  }),
+  output: 'server'
 })
