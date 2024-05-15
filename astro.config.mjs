@@ -7,8 +7,10 @@ import robotsTxt from "astro-robots-txt"
 export default defineConfig({
   integrations: [tailwind(), robotsTxt()],
   site: 'https://porfolio-rauldev99.vercel.app/',
+  output: 'server',
   adapter: vercel({
-    webAnalytics: { enabled: true }
-  }),
-  output: 'server'
+    webAnalytics: {
+      enabled: true,
+    },
+  })
 })
