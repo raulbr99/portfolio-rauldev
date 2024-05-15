@@ -5,6 +5,8 @@ import LinkedInIcon from "@/components/icons/LinkedIn.astro"
 import MailIcon from "@/components/icons/Mail.astro"
 import SocialPill from "@/components/SocialPill.astro"
 import GitHub from "./icons/GitHub.astro"
+import CvIcon from "./icons/Cv.astro"
+
 ---
 
 <div class="max-w-xl">
@@ -47,6 +49,10 @@ import GitHub from "./icons/GitHub.astro"
     <SocialPill href="https://github.com/raulbr99">
       <GitHub class="size-4" />
       GitHub
+    </SocialPill>
+    <SocialPill href="/raul-cv.pdf" download="raul-cv">
+      <CvIcon class="size-4" />
+      Download CV
     </SocialPill>
   </nav>
 </div>
