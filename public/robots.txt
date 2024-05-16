@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://porfolio-rauldev99.vercel.app/sitemap-index.xml
