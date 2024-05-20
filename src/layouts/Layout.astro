@@ -23,7 +23,6 @@ const { description, title } = Astro.props;
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
 
-    <PostHog />
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-SVVXTT30P6"
     ></script>
@@ -33,9 +32,10 @@ const { description, title } = Astro.props;
         dataLayer.push(arguments);
       }
       gtag("js", new Date());
-
+      
       gtag("config", "G-SVVXTT30P6");
-    </script>
+      </script>
+      <PostHog />
   </head>
 
   <body class="relative text-black dark:text-white">
