@@ -8,7 +8,7 @@ import sitemap from '@astrojs/sitemap';
 // https://astro.build/config
 export default defineConfig({
   integrations: [tailwind(), robotsTxt(), sitemap()],
-  site: 'https://porfolio-rauldev99.vercel.app/',
+  site: 'https://rauldev.dev/',
   output: 'server',
   adapter: vercel({
     webAnalytics: {
