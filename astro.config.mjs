@@ -4,15 +4,16 @@ import vercel from '@astrojs/vercel/serverless';
 import robotsTxt from "astro-robots-txt";
 import sitemap from '@astrojs/sitemap';
 
+import react from "@astrojs/react";
 
 // https://astro.build/config
 export default defineConfig({
-  integrations: [tailwind(), robotsTxt(), sitemap()],
+  integrations: [tailwind(), robotsTxt(), sitemap(), react()],
   site: 'https://rauldev.dev/',
   output: 'server',
   adapter: vercel({
     webAnalytics: {
-      enabled: true,
-    },
+      enabled: true
+    }
   })
 });
