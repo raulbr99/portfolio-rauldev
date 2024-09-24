@@ -21,17 +21,27 @@ const PROJECTS = [
   {
     title: "BIT2CHAIN - Blockchain and cryptocurrency blog about the recent news",
     description:
-      "Blog de blockchain y criptomonedas, donde publicaba las ultimas noticias relacionadas y donde también aprendía poco a poco sobre el mundo de la blockchain",
+      "Blockchain and cryptocurrency blog, where I published the latest news and where I also learned little by little about the world of blockchain.",
     link: "https://bit2chain.com",
+    github: "https://github.com/raulbr99/bit2chain",
     image: "/projects/B2C.png",
     tags: [TAGS.NEXT, TAGS.TAILWIND],
-  }
+  },
+  {
+    title: "Locksy - Password Manager",
+    description:
+      "Locksy is a password manager that allows you to generate random passwords, save passwords, and view stored passwords.",
+    link: "https://locksy.vercel.app",
+    github: "https://github.com/raulbr99/locksy",
+    image: "/projects/logo_locksy.png",
+    tags: [TAGS.NEXT, TAGS.TAILWIND],
+  },
 ]
 ---
 
 <div class="flex flex-col gap-y-16">
   {
-    PROJECTS.map(({ image, title, description, tags, link }) => (
+    PROJECTS.map(({ image, title, description, tags, link, github }) => (
     <article class="flex flex-col space-x-0 space-y-8 group md:flex-row md:space-x-8 md:space-y-0">
   <div class="w-full md:w-1/2">
     <div class="relative flex flex-col items-center col-span-6 row-span-5 gap-8 transition duration-500 ease-in-out transform shadow-xl overflow-clip rounded-xl sm:rounded-xl md:group-hover:-translate-y-1 md:group-hover:shadow-2xl lg:border lg:border-gray-800 lg:hover:border-gray-700 lg:hover:bg-gray-800/50">
@@ -57,13 +67,13 @@ const PROJECTS = [
 
       <div class="mt-2 text-gray-700 dark:text-gray-400">{description}</div>
       <footer class="flex items-end justify-start mt-4 gap-x-4">
-          {/* {github && (
+          {github && (
             <LinkButton href={github}>
               <GitHub class="size-6" />
               Code
               
             </LinkButton>
-          )} */}
+          )}
           {link && (
             <LinkButton href={link}>
               <Link class="size-4" />
