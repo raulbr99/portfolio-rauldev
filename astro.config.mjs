@@ -19,8 +19,8 @@ export default defineConfig({
   vite: {
     resolve: {
       alias: {
-        "@": path.resolve("./src"),
-      },
-    },
+        '@': '/src'
+      }
+    }
   }
 });

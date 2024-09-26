@@ -3,9 +3,7 @@
   "compilerOptions": {
     "baseUrl": "C:/Users/raule/Documents/GitHub/portfolio-rauldev",
     "paths": {
-      "@/*": [
-        "src/*"
-      ]
+      "@/*": ["src/*"]
     },
     "jsx": "react-jsx",
     "jsxImportSource": "react"
