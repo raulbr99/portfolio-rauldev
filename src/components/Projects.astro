@@ -1,42 +1,49 @@
 ---
-import GitHub from "./icons/GitHub.astro"
-import NextJS from "./icons/NextJS.astro"
-import Tailwind from "./icons/Tailwind.astro"
-import Link from "./icons/Link.astro"
-import LinkButton from "./LinkButton.astro"
+import GitHub from "./icons/GitHub.astro";
+import NextJS from "./icons/NextJS.astro";
+import Tailwind from "./icons/Tailwind.astro";
+import Supabase from "./icons/Supabase.astro";
+import Link from "./icons/Link.astro";
+import LinkButton from "./LinkButton.astro";
 
 const TAGS = {
-  NEXT: {
-    name: "Next.js",
-    class: "bg-black text-white",
-    icon: NextJS,
-  },
-  TAILWIND: {
-    name: "Tailwind CSS",
-    class: "bg-[#003159] text-white",
-    icon: Tailwind,
-  },
-}
+	NEXT: {
+		name: "Next.js",
+		class: "bg-black text-white",
+		icon: NextJS,
+	},
+	TAILWIND: {
+		name: "Tailwind CSS",
+		class: "bg-[#003159] text-white",
+		icon: Tailwind,
+	},
+	SUPABASE: {
+		name: "Supabase",
+		class: "bg-[#005a9e] text-white",
+		icon: Supabase,
+	},
+};
 const PROJECTS = [
-  {
-    title: "BIT2CHAIN - Blockchain and cryptocurrency blog about the recent news",
-    description:
-      "Blockchain and cryptocurrency blog, where I published the latest news and where I also learned little by little about the world of blockchain.",
-    link: "https://bit2chain.com",
-    github: "https://github.com/raulbr99/bit2chain",
-    image: "/projects/B2C.png",
-    tags: [TAGS.NEXT, TAGS.TAILWIND],
-  },
-  {
-    title: "Locksy - Password Manager",
-    description:
-      "Locksy is a password manager that allows you to generate random passwords, save passwords, and view stored passwords.",
-    link: "https://locksy.vercel.app",
-    github: "https://github.com/raulbr99/locksy",
-    image: "/projects/logo_locksy.png",
-    tags: [TAGS.NEXT, TAGS.TAILWIND],
-  },
-]
+	{
+		title:
+			"BIT2CHAIN - Blockchain and cryptocurrency blog about the recent news",
+		description:
+			"Blockchain and cryptocurrency blog, where I published the latest news and where I also learned little by little about the world of blockchain.",
+		link: "https://bit2chain.com",
+		github: "https://github.com/raulbr99/bit2chain",
+		image: "/projects/B2C.png",
+		tags: [TAGS.NEXT, TAGS.TAILWIND],
+	},
+	{
+		title: "Locksy - Password Manager",
+		description:
+			"Locksy is a password manager that allows you to generate random passwords, save passwords, and view stored passwords.",
+		link: "https://locksy.vercel.app",
+		github: "https://github.com/raulbr99/locksy",
+		image: "/projects/logo_locksy.png",
+		tags: [TAGS.NEXT, TAGS.SUPABASE, TAGS.TAILWIND],
+	},
+];
 ---
 
 <div class="flex flex-col gap-y-16">
