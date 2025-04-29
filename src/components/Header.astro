@@ -1,28 +1,43 @@
----
-import ThemeToggle from "./ThemeToggle.astro"
+---  
+import ThemeToggle from "./ThemeToggle.astro";
 
 const navItems = [
-  {
-    title: "Experience",
-    label: "experience",
-    url: "/#experience",
-  },
-  {
-    title: "Projects",
-    label: "projects",
-    url: "/#projects",
-  },
-  {
-    title: "About me",
-    label: "about-me",
-    url: "/#about-me",
-  },
-  {
-    title: "Contact",
-    label: "contact",
-    url: "mailto:raulbernariera99@gmail.com",
-  },
-]
+	{
+		title: "Inicio",
+		label: "inicio",
+		url: "/#inicio",
+	},
+	{
+		title: "Servicios",
+		label: "servicios",
+		url: "/#servicios",
+	},
+	{
+		title: "Experiencia",
+		label: "experiencia",
+		url: "/#experiencia",
+	},
+	{
+		title: "Proyectos",
+		label: "proyectos",
+		url: "/#proyectos",
+	},
+	{
+		title: "Habilidades",
+		label: "habilidades",
+		url: "/#habilidades",
+	},
+	{
+		title: "Sobre mí",
+		label: "sobre-mi",
+		url: "/#sobre-mi",
+	},
+	{
+		title: "Contacto",
+		label: "contacto",
+		url: "mailto:raulbernariera99@gmail.com",
+	},
+];
 ---
 
 <header
@@ -31,17 +46,15 @@ const navItems = [
   <nav
     class="flex px-3 text-sm font-medium rounded-full text-gray-600 dark:text-gray-200 justify-center items-center"
   >
-    {
-      navItems.map((link) => (
-        <a
-          class="relative block px-2 py-2 transition hover:text-blue-500 dark:hover:text-blue-400"
-          aria-label={link.label}
-          href={link.url}
-        >
-          {link.title}
-        </a>
-      ))
-    }
+    {navItems.map((link) => (
+      <a
+        class="relative block px-2 py-2 transition hover:text-blue-500 dark:hover:text-blue-400"
+        aria-label={link.label}
+        href={link.url}
+      >
+        {link.title}
+      </a>
+    ))}
     <ThemeToggle />
   </nav>
 </header>
@@ -52,10 +65,10 @@ const navItems = [
     const navItems = document.querySelectorAll("header nav a")
 
     const callback = (entries: any[]) => {
-      entries.forEach((entry) => {
+      entries.forEach((entry: { isIntersecting: any; target: { id: string | null } }) => {
         if (entry.isIntersecting) {
           navItems.forEach((item) => {
-            if (item.getAttribute("aria-label") == entry.target.id) {
+            if (item.getAttribute("aria-label") === entry.target.id) {
               item.classList.add("text-blue-500")
             } else {
               item.classList.remove("text-blue-500")
@@ -71,18 +84,13 @@ const navItems = [
       threshold: 0.3,
     })
 
-    sections.forEach((section) => {
-      observer.observe(section)
-    })
+    sections.forEach((section) => observer.observe(section))
 
-    // Cleanup function
     document.onvisibilitychange = () => {
       if (document.visibilityState === "hidden") {
         observer.disconnect()
       } else {
-        sections.forEach((section) => {
-          observer.observe(section)
-        })
+        sections.forEach((section) => observer.observe(section))
       }
     }
   })

@@ -1,0 +1,64 @@
+---
+import SocialPill from "../components/SocialPill.astro";
+import MailIcon from "../components/icons/Mail.astro";
+import LinkedInIcon from "../components/icons/LinkedIn.astro";
+import GitHub from "../components/icons/GitHub.astro";
+---
+
+<div class="max-w-xl mx-auto space-y-6">
+  <p class="text-lg text-gray-800 dark:text-gray-300">
+    ¿Tienes un proyecto en mente o necesitas una web a medida? ¡Hablemos!
+  </p>
+
+  <!-- Contact Form -->
+  <form
+    action="mailto:raulbernariera99@gmail.com"
+    method="POST"
+    enctype="text/plain"
+    class="flex flex-col gap-4"
+  >
+    <input
+      type="text"
+      name="Nombre"
+      placeholder="Tu nombre"
+      required
+      class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+    />
+    <input
+      type="email"
+      name="Email"
+      placeholder="Tu correo electrónico"
+      required
+      class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+    />
+    <textarea
+      name="Mensaje"
+      rows="5"
+      placeholder="Cuéntame sobre tu proyecto..."
+      required
+      class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
+    ></textarea>
+    <button
+      type="submit"
+      class="self-start px-6 py-2 bg-blue-600 text-white font-semibold rounded-md hover:bg-blue-700 transition"
+    >
+      Enviar mensaje
+    </button>
+  </form>
+
+  <!-- Alternative Contacts -->
+  <div class="flex flex-wrap gap-4 mt-4">
+    <SocialPill href="mailto:raulbernariera99@gmail.com">
+      <MailIcon class="size-4" />
+      Email Directo
+    </SocialPill>
+    <SocialPill href="https://www.linkedin.com/in/raul-berna-riera/" target="_blank">
+      <LinkedInIcon class="size-4" />
+      LinkedIn
+    </SocialPill>
+    <SocialPill href="https://github.com/raulbr99" target="_blank">
+      <GitHub class="size-4" />
+      GitHub
+    </SocialPill>
+  </div>
+</div>

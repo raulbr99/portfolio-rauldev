@@ -1,115 +1,102 @@
 ---
-import SunIcon from "./icons/Sun.astro"
-import MoonIcon from "./icons/Moon.astro"
-import SystemIcon from "./icons/System.astro"
-
-const THEMES = ["Light", "Dark", "System"]
+// components/ThemeToggle.astro
+import SunIcon from "../components/icons/Sun.astro";
+import MoonIcon from "../components/icons/Moon.astro";
+import SystemIcon from "../components/icons/System.astro";
 ---
-
-<div class="relative ml-1 mr-1">
-  <button
-    id="theme-toggle-btn"
-    class="appearance-none border-none flex hover:scale-125 transition"
-  >
-    <span class="sr-only">Choose the theme</span>
-    <SunIcon id="light" class="theme-toggle-icon size-5 transition-all" />
-    <MoonIcon
-      id="dark"
-      class="theme-toggle-icon absolute size-5 transition-all"
-    />
-    <SystemIcon
-      id="system"
-      class="theme-toggle-icon absolute size-5 transition-all"
-    />
-  </button>
-  <div
-    id="themes-menu"
-    class="absolute hidden scale-80 top-8 right-0 text-sm p-1 min-w-[8rem] rounded-md border border-gray-100 bg-white/90 dark:bg-gray-900/90 dark:border-gray-500/20 shadow-[0_3px_10px_rgb(0,0,0,0.2)] backdrop-blur-md"
-  >
-    <ul>
-      {
-        THEMES.map((theme) => (
-          <li class="themes-menu-option px-2 py-1.5 cursor-default hover:bg-neutral-400/40 dark:hover:bg-gray-500/50 rounded-sm">
-            {theme}
-          </li>
-        ))
-      }
-    </ul>
-  </div>
-</div>
-
 <style>
-  #themes-menu.open {
-    display: inline;
-    animation: scale-up-center 0.15s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
-  }
-
-  @keyframes scale-up-center {
-    from {
-      transform: scale(0.8);
-      opacity: 0;
-    }
-
-    to {
-      transform: scale(1);
-      opacity: 1;
-    }
+  .toggle-icon { transition: opacity .2s, transform .2s; }
+  /* Cuando un icono esté hidden, que no ocupe espacio */
+  .toggle-icon.hidden { opacity: 0; transform: scale(0); }
+  #theme-options { transition: transform .15s, opacity .15s; }
+  #theme-options.open {
+    display: block;
+    transform: scale(1);
+    opacity: 1;
   }
 </style>
 
-<script is:inline>
-  let remove = null
-  const matchMedia = window.matchMedia("(prefers-color-scheme: dark)")
-  const themesMenu = document.getElementById("themes-menu")
+<div class="relative inline-block">
+  <button
+    id="theme-toggle-btn"
+    aria-haspopup="true"
+    aria-expanded="false"
+    class="p-1 rounded hover:bg-gray-200 dark:hover:bg-gray-700"
+  >
+    <span class="sr-only">Cambiar tema</span>
+    <SunIcon    id="icon-light"  class="toggle-icon size-5" />
+    <MoonIcon   id="icon-dark"   class="toggle-icon size-5 hidden absolute inset-0" />
+    <SystemIcon id="icon-system" class="toggle-icon size-5 hidden absolute inset-0" />
+  </button>
 
-  const getThemePreference = () => {
-    if (typeof localStorage !== "undefined") {
-      return localStorage.getItem("theme") ?? "system"
-    }
+  <ul
+    id="theme-options"
+    class="hidden absolute right-0 mt-1 p-1 bg-white dark:bg-gray-800 border rounded shadow-lg text-sm"
+  >
+    <li data-theme="light"  class="px-2 py-1 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer">Light</li>
+    <li data-theme="dark"   class="px-2 py-1 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer">Dark</li>
+    <li data-theme="system" class="px-2 py-1 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer">System</li>
+  </ul>
+</div>
 
-    return window.matchMedia("(prefers-color-scheme: dark)").matches
-      ? "dark"
-      : "light"
-  }
+<script type="module" client-load>
+  const html       = document.documentElement;
+  const btn        = document.getElementById('theme-toggle-btn');
+  const menu       = document.getElementById('theme-options');
+  const icons      = {
+    light:  document.getElementById('icon-light'),
+    dark:   document.getElementById('icon-dark'),
+    system: document.getElementById('icon-system'),
+  };
 
-  const updateIcon = (themePreference) => {
-    document.querySelectorAll(".theme-toggle-icon").forEach((element) => {
-      element.style.scale = element.id === themePreference ? "1" : "0"
-    })
-  }
+  const getStoredTheme = () => localStorage.getItem('theme') || 'system';
 
-  const updateTheme = () => {
-    if (remove != null) {
-      remove()
-    }
-    matchMedia.addEventListener("change", updateTheme)
-    remove = () => {
-      matchMedia.removeEventListener("change", updateTheme)
-    }
+  const applyTheme = (theme) => {
+    // Calcula el tema efectivo
+    const isDark = theme === 'dark'
+      || (theme === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches);
 
-    const themePreference = getThemePreference()
-    const isDark =
-      themePreference === "dark" ||
-      (themePreference === "system" && matchMedia.matches)
+    html.classList.toggle('dark', isDark);
 
-    updateIcon(themePreference)
-    document.documentElement.classList[isDark ? "add" : "remove"]("dark")
-  }
+    // Muestra sólo el icono activo
+    Object.entries(icons).forEach(([key, el]) => {
+      el.classList.toggle('hidden', key !== theme);
+    });
+  };
 
-  updateTheme()
+  // Inicial
+  applyTheme(getStoredTheme());
 
-  document.addEventListener("click", () => themesMenu.classList.remove("open"))
+  // Cambios en sistema
+  window.matchMedia('(prefers-color-scheme: dark)')
+    .addEventListener('change', () => {
+      if (getStoredTheme() === 'system') {
+        applyTheme('system');
+      }
+    });
 
-  document.getElementById("theme-toggle-btn").addEventListener("click", (e) => {
-    e.stopPropagation()
-    const isClosed = !themesMenu.classList.contains("open")
-    themesMenu.classList[isClosed ? "add" : "remove"]("open")
-  })
+  // Toggle menú
+  btn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const expanded = btn.getAttribute('aria-expanded') === 'true';
+    btn.setAttribute('aria-expanded', String(!expanded));
+    menu.classList.toggle('open');
+  });
 
-  document.querySelectorAll(".themes-menu-option").forEach((element) => {
-    element.addEventListener("click", (e) => {
-      localStorage.setItem("theme", e.target.innerText.toLowerCase().trim())
-      updateTheme()
-    })
-  })
+  // Selección de tema (delegación)
+  menu.addEventListener('click', (e) => {
+    const li = e.target.closest('[data-theme]');
+    if (!li) return;
+    const theme = li.dataset.theme;
+    localStorage.setItem('theme', theme);
+    applyTheme(theme);
+    menu.classList.remove('open');
+    btn.setAttribute('aria-expanded', 'false');
+  });
+
+  // Cierra al clickar fuera
+  document.addEventListener('click', () => {
+    menu.classList.remove('open');
+    btn.setAttribute('aria-expanded', 'false');
+  });
 </script>

@@ -1,56 +1,105 @@
 ---
 import PostHogLayout from "../layouts/PostHogLayout.astro";
+import ThemeToggle from "../components/ThemeToggle.astro";
+import SectionContainer from "../components/SectionContainer.astro";
 
 import AboutMe from "../components/AboutMe.astro";
-import Briefcase from "../components/icons/Briefcase.astro";
-import CodeIcon from "../components/icons/Code.astro";
-import Experience from "../components/Experience.astro";
-import ProfileCheck from "../components/icons/ProfileCheck.astro";
-import Projects from "../components/Projects.astro";
-import SectionContainer from "../components/SectionContainer.astro";
+import Projects from "../components/Projects";
+import Skills from "../components/Skills.astro";
+import Contact from "../components/Contact.astro";
 import Hero from "../components/Hero.astro";
+import Experience from "../components/Experience.astro";
+import Services from "../components/Services.astro";
+
+const navItems = [
+	{ title: "Inicio", label: "inicio", url: "#inicio" },
+	{ title: "Servicios", label: "servicios", url: "#servicios" },
+	{ title: "Experiencia", label: "experiencia", url: "#experiencia" },
+	{ title: "Proyectos", label: "proyectos", url: "#proyectos" },
+	{ title: "Habilidades", label: "habilidades", url: "#habilidades" },
+	{ title: "Sobre mí", label: "sobre-mi", url: "#sobre-mi" },
+	{ title: "Contacto", label: "contacto", url: "#contacto" },
+];
 ---
 
 <PostHogLayout
-  title="Raul Berna Portfolio - Developer y  Web Programmer with 3 years of experience"
-  description="Hire Raul Berna to create your web or mobile application. Web Developer specialized in creating unique applications."
+  title="Raul Berna Portfolio - Developer y Web Programmer con 3 años de experiencia"
+  description="Contrata a Raul Berna para crear tu aplicación web o móvil. Desarrollador web especializado en aplicaciones únicas."
 >
-  <main class="px-4">
-    <SectionContainer class="py-16 md:py-36">
-      <Hero>
-      </slot>
-    </Hero>
+  <!-- Header fijo con navegación -->
+  <header class="fixed top-0 w-full z-20 bg-white/70 dark:bg-gray-900/70 backdrop-blur">
+    <SectionContainer class="py-2">
+      <nav class="flex items-center justify-center space-x-2 text-sm font-medium text-gray-600 dark:text-gray-200 rounded-full">
+        {navItems.map(item => (
+          <a
+            href={item.url}
+            aria-label={item.label}
+            class="px-3 py-1 transition rounded-full hover:text-blue-500 dark:hover:text-blue-400"
+          >
+            {item.title}
+          </a>
+        ))}
+        <ThemeToggle class="ml-4" />
+      </nav>
     </SectionContainer>
-    <div class="space-y-24">
-    <SectionContainer id="experience">
-      <h2
-        class="flex items-center mb-6 text-3xl font-semibold gap-x-3 text-black/80 dark:text-white"
-      >
-        <Briefcase class="size-8" />
-        Work Experience
-      </h2>
-      <Experience />
-    </SectionContainer>
+  </header>
 
-    <SectionContainer id="projects">
-      <h2
-        class="flex items-center mb-6 text-3xl font-semibold gap-x-3 text-black/80 dark:text-white"
-      >
-        <CodeIcon class="size-7" />
-        Projects
-      </h2>
-      <Projects />
-    </SectionContainer>
+  <!-- Main con scroll snap -->
+  <main class="h-screen overflow-y-auto snap-y snap-mandatory scroll-smooth pt-[68px]">
+    <section id="inicio" class="snap-start h-screen flex items-center justify-center">
+      <SectionContainer class="py-16 md:py-24">
+        <Hero />
+      </SectionContainer>
+    </section>
 
-    <SectionContainer id="about-me">
-      <h2
-        class="flex items-center mb-6 text-3xl font-semibold gap-x-8 text-black/80 dark:text-white"
-      >
-        <ProfileCheck class="size-8" />
-        About Me
-      </h2>
-      <AboutMe />
-    </SectionContainer>
-  </div>
+    <section id="servicios" class="snap-start h-screen flex items-center justify-center">
+      <SectionContainer class="py-16 md:py-24">
+        <h2 class="mb-6 text-3xl font-semibold text-black/80 dark:text-white flex items-center gap-x-3">
+          Servicios
+        </h2>
+        <Services />
+      </SectionContainer>
+    </section>
+    <section id="experiencia" class="snap-start h-screen flex items-center justify-center">
+      <SectionContainer class="py-16 md:py-24">
+        <h2 class="mb-6 text-3xl font-semibold text-black/80 dark:text-white flex items-center gap-x-3">
+          Experiencia
+        </h2>
+        <Experience />
+      </SectionContainer>
+    </section>
+
+    <section id="proyectos" class="snap-start h-screen flex items-center justify-center">
+      <SectionContainer class="py-16 md:py-24">
+        <h2 class="mb-6 text-3xl font-semibold text-black/80 dark:text-white flex items-center gap-x-3">
+          Proyectos
+        </h2>
+        <Projects client:load/>
+      </SectionContainer>
+    </section>
+    
+    <section id="habilidades" class="snap-start h-screen flex items-center justify-center">
+      <SectionContainer class="py-16 md:py-24">
+        <h2 class="mb-6 text-3xl font-semibold text-black/80 dark:text-white flex items-center gap-x-3">
+          Habilidades
+        </h2>
+        <Skills />
+      </SectionContainer>
+    </section>
+
+    <section id="sobre-mi" class="snap-start h-screen flex items-center justify-center">
+      <SectionContainer class="py-16 md:py-24">
+        <AboutMe />
+      </SectionContainer>
+    </section>
+
+    <section id="contacto" class="snap-start h-screen flex items-center justify-center">
+      <SectionContainer class="py-16 md:py-24">
+        <h2 class="mb-6 text-3xl font-semibold text-black/80 dark:text-white flex items-center gap-x-3">
+          Contacto
+        </h2>
+        <Contact />
+      </SectionContainer>
+    </section>
   </main>
 </PostHogLayout>
