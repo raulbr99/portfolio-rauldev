@@ -1,18 +1,54 @@
 ---
+import {
+	FaHtml5,
+	FaCss3Alt,
+	FaJsSquare,
+	FaReact,
+	FaNodeJs,
+} from "react-icons/fa";
+import {
+	SiNextdotjs,
+	SiAstro,
+	SiTailwindcss,
+	SiExpress,
+	SiMongodb,
+	SiPostgresql,
+	SiApachenetbeanside,
+} from "react-icons/si";
+
+const iconSize = 40;
+
+const skills = [
+	{ name: "HTML5", icon: FaHtml5, color: "#e34c26" },
+	{ name: "CSS3", icon: FaCss3Alt, color: "#264de4" },
+	{ name: "JavaScript", icon: FaJsSquare, color: "#f7df1e" },
+	{ name: "React", icon: FaReact, color: "#61dafb" },
+	{ name: "Next.js", icon: SiNextdotjs, class: "text-black dark:text-white" },
+	{ name: "Astro", icon: SiAstro, color: "#ff5d01" },
+	{ name: "Tailwind", icon: SiTailwindcss, color: "#38bdf8" },
+	{ name: "Node.js", icon: FaNodeJs, color: "#68a063" },
+	{
+		name: "Express",
+		icon: SiExpress,
+		class: "text-gray-800 dark:text-gray-200",
+	},
+	{ name: "MongoDB", icon: SiMongodb, color: "#47a248" },
+	{ name: "PostgreSQL", icon: SiPostgresql, color: "#336791" },
+	{ name: "REST APIs", icon: SiApachenetbeanside, color: "#f89820" },
+];
 ---
 
-<section>
-    <h2>Fullstack Skills</h2>
-    <ul>
-        <li>HTML</li>
-        <li>CSS</li>
-        <li>JavaScript</li>
-        <li>React</li>
-        <li>Node.js</li>
-        <li>Express</li>
-        <li>SQL</li>
-        <li>NoSQL</li>
-        <li>RESTful APIs</li>
-        <li>GraphQL</li>
-    </ul>
+<section id="skills" class="py-12">
+  <h2 class="text-3xl font-bold mb-6 text-center">Fullstack Skills</h2>
+  <p class="text-center text-gray-600 mb-10 max-w-xl mx-auto">
+    Desarrollo aplicaciones web rápidas, escalables y modernas con tecnologías del lado del cliente y del servidor.
+  </p>
+  <ul class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6 max-w-4xl mx-auto text-center text-sm text-gray-700">
+    {skills.map(({ name, icon: Icon, color, class: customClass }) => (
+      <li class="flex flex-col items-center">
+        <Icon size={iconSize} color={color} className={customClass} />
+        <span class="mt-2 bg-blue-500 rounded-full text-white px-2 font-bold">{name}</span>
+      </li>
+    ))}
+  </ul>
 </section>

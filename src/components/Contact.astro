@@ -10,41 +10,82 @@ import GitHub from "../components/icons/GitHub.astro";
     ¿Tienes un proyecto en mente o necesitas una web a medida? ¡Hablemos!
   </p>
 
-  <!-- Contact Form -->
+ 
   <form
-    action="mailto:raulbernariera99@gmail.com"
-    method="POST"
-    enctype="text/plain"
-    class="flex flex-col gap-4"
+  id="contact-form"
+  action="https://formspree.io/f/xnndpjor"
+  method="POST"
+  class="flex flex-col gap-4"
+>
+  <input
+    type="text"
+    name="Nombre"
+    placeholder="Tu nombre"
+    required
+    class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+  />
+  <input
+    type="email"
+    name="Email"
+    placeholder="Tu correo electrónico"
+    required
+    class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+  />
+  <textarea
+    name="Mensaje"
+    rows="5"
+    placeholder="Cuéntame sobre tu proyecto..."
+    required
+    class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
+  ></textarea>
+
+  <input type="hidden" name="_captcha" value="false" />
+
+  <button
+    type="submit"
+    class="self-start px-6 py-2 bg-blue-600 text-white font-semibold rounded-md hover:bg-blue-700 transition"
   >
-    <input
-      type="text"
-      name="Nombre"
-      placeholder="Tu nombre"
-      required
-      class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-    />
-    <input
-      type="email"
-      name="Email"
-      placeholder="Tu correo electrónico"
-      required
-      class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-    />
-    <textarea
-      name="Mensaje"
-      rows="5"
-      placeholder="Cuéntame sobre tu proyecto..."
-      required
-      class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
-    ></textarea>
-    <button
-      type="submit"
-      class="self-start px-6 py-2 bg-blue-600 text-white font-semibold rounded-md hover:bg-blue-700 transition"
-    >
-      Enviar mensaje
-    </button>
-  </form>
+    Enviar mensaje
+  </button>
+
+  <!-- Mensaje de confirmación -->
+  <p id="success-message" class="hidden text-green-600 font-medium mt-2">
+    ¡Mensaje enviado con éxito! Te responderé lo antes posible.
+  </p>
+</form>
+
+<script>
+  const form = document.getElementById('contact-form') as HTMLFormElement;
+  const successMessage = document.getElementById('success-message');
+
+  if (form) {
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const formData = new FormData(form);
+
+      try {
+        const res = await fetch(form.action, {
+          method: form.method,
+          body: formData,
+          headers: {
+            Accept: 'application/json'
+          }
+        });
+
+        if (res.ok) {
+          form.reset();
+          successMessage?.classList.remove('hidden');
+        } else {
+          alert('Hubo un error al enviar el mensaje. Inténtalo más tarde.');
+        }
+      } catch (error) {
+        alert('Error de red. Inténtalo más tarde.');
+      }
+    });
+  }
+</script>
+
 
   <!-- Alternative Contacts -->
   <div class="flex flex-wrap gap-4 mt-4">

@@ -10,41 +10,16 @@ import Contact from "../components/Contact.astro";
 import Hero from "../components/Hero.astro";
 import Experience from "../components/Experience.astro";
 import Services from "../components/Services.astro";
-
-const navItems = [
-	{ title: "Inicio", label: "inicio", url: "#inicio" },
-	{ title: "Servicios", label: "servicios", url: "#servicios" },
-	{ title: "Experiencia", label: "experiencia", url: "#experiencia" },
-	{ title: "Proyectos", label: "proyectos", url: "#proyectos" },
-	{ title: "Habilidades", label: "habilidades", url: "#habilidades" },
-	{ title: "Sobre mí", label: "sobre-mi", url: "#sobre-mi" },
-	{ title: "Contacto", label: "contacto", url: "#contacto" },
-];
+import Header from "../components/Header.astro";
+import ParallaxBackground from "../components/ParallaxBackground.astro";
 ---
 
 <PostHogLayout
   title="Raul Berna Portfolio - Developer y Web Programmer con 3 años de experiencia"
   description="Contrata a Raul Berna para crear tu aplicación web o móvil. Desarrollador web especializado en aplicaciones únicas."
 >
-  <!-- Header fijo con navegación -->
-  <header class="fixed top-0 w-full z-20 bg-white/70 dark:bg-gray-900/70 backdrop-blur">
-    <SectionContainer class="py-2">
-      <nav class="flex items-center justify-center space-x-2 text-sm font-medium text-gray-600 dark:text-gray-200 rounded-full">
-        {navItems.map(item => (
-          <a
-            href={item.url}
-            aria-label={item.label}
-            class="px-3 py-1 transition rounded-full hover:text-blue-500 dark:hover:text-blue-400"
-          >
-            {item.title}
-          </a>
-        ))}
-        <ThemeToggle class="ml-4" />
-      </nav>
-    </SectionContainer>
-  </header>
-
   <!-- Main con scroll snap -->
+ <ParallaxBackground />  
   <main class="h-screen overflow-y-auto snap-y snap-mandatory scroll-smooth pt-[68px]">
     <section id="inicio" class="snap-start h-screen flex items-center justify-center">
       <SectionContainer class="py-16 md:py-24">
