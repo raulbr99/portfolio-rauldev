@@ -39,16 +39,26 @@ const skills = [
 ---
 
 <section id="skills" class="py-12">
-  <h2 class="text-3xl font-bold mb-6 text-center">Fullstack Skills</h2>
-  <p class="text-center text-gray-600 mb-10 max-w-xl mx-auto">
-    Desarrollo aplicaciones web rápidas, escalables y modernas con tecnologías del lado del cliente y del servidor.
-  </p>
-  <ul class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6 max-w-4xl mx-auto text-center text-sm text-gray-700">
-    {skills.map(({ name, icon: Icon, color, class: customClass }) => (
-      <li class="flex flex-col items-center">
-        <Icon size={iconSize} color={color} className={customClass} />
-        <span class="mt-2 bg-blue-500 rounded-full text-white px-2 font-bold">{name}</span>
-      </li>
-    ))}
-  </ul>
-</section>
+	<h2 class="text-3xl font-bold mb-6 text-center text-gray-900 dark:text-white">
+	  Fullstack Skills
+	</h2>
+	<p class="text-center text-black dark:text-gray-300 mb-10 max-w-xl mx-auto">
+	  Desarrollo aplicaciones web rápidas, escalables y modernas con tecnologías del lado del cliente y del servidor.
+	</p>
+  
+	<ul class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6 max-w-4xl mx-auto text-center text-sm">
+	  {skills.map(({ name, icon: Icon, color, class: customClass }) => (
+		<li class="flex flex-col items-center justify-center bg-blue-100 dark:bg-blue-900 rounded-xl px-4 py-5 ring-2 ring-blue-400/50 dark:ring-blue-700/50 transition-colors duration-300">
+		  <Icon
+			size={iconSize}
+			color={color}
+			className={customClass ?? "text-gray-800 dark:text-gray-200"}
+		  />
+		  <span class="mt-2 px-3 py-1 text-sm font-semibold text-gray-900 dark:text-white">
+			{name}
+		  </span>
+		</li>
+	  ))}
+	</ul>
+  </section>
+  

@@ -1,12 +1,13 @@
----
-const personalImageAlt = "Raul Berna";
----
-
 <article
-  class="flex flex-col items-center justify-center gap-8 text-gray-700 dark:text-gray-300 md:flex-row"
+  class="flex flex-col items-center justify-center gap-8 text-gray-800 dark:text-gray-200 md:flex-row"
 >
   <div
-    class="[&>p]:mb-4 [&>p>strong]:text-blue-500 dark:[&>p>strong]:text-blue-300 [&>p>strong]:font-normal [&>p>strong]:font-mono text-pretty order-2 md:order-1"
+    class="[&>p]:mb-4 
+           [&>p>strong]:text-blue-500 
+           [&>p>strong]:font-semibold 
+           [&>p>strong]:font-mono 
+           text-pretty 
+           order-2 md:order-1 max-w-xl"
   >
     <p>
       Mi nombre es <strong>Raúl Berna Riera</strong>. Empecé a programar hace 8 años jugando con <strong>Scratch</strong> y, hoy con 24 años, desarrollo sitios web full‑stack usando <strong>Next.js</strong> y <strong>Strapi</strong>.
@@ -21,7 +22,11 @@ const personalImageAlt = "Raul Berna";
     </p>
 
     <p>
-      Echa un vistazo a mis proyectos abajo o <a href="#contact" class="text-blue-500 font-bold">contáctame</a> para colaborar juntos.
+      Echa un vistazo a mis proyectos abajo o 
+      <a href="#contact" class="text-blue-600 dark:text-blue-400 font-semibold hover:underline">
+        contáctame
+      </a> 
+      para colaborar juntos.
     </p>
   </div>
 
@@ -30,8 +35,7 @@ const personalImageAlt = "Raul Berna";
     height="200"
     src="/me.webp"
     alt="Retrato de Raúl Berna Riera en la cima de una montaña con el valle al fondo"
-    class="order-1 object-cover w-48 sm:w-64 h-full p-1 md:order-2 rotate-3 lg:p-2 lg:w-64 aspect-square rounded-2xl bg-black/20 dark:bg-yellow-500/5 ring-1 ring-black/70 dark:ring-white/20"
+    class="order-1 object-cover w-48 sm:w-64 h-full p-1 md:order-2 rotate-3 lg:p-2 lg:w-64 aspect-square rounded-2xl bg-gray-100 dark:bg-white/10 ring-2 ring-gray-300 dark:ring-white/20"
     style="object-position: 50% 50%"
   />
 </article>
-

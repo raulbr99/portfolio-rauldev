@@ -1,29 +1,49 @@
 ---
-// src/components/ParallaxBackground.astro
 ---
 
-<style>
+<style is:global>
+  .parallax-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: -10;
+    width: 100%;
+    height: 100%;
+    background-image: url('/parallax.png');
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+
+  .parallax-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: -9;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    transition: background-color 0.3s ease;
+  }
+
+  html.light .parallax-overlay {
+    background-color: rgba(255, 255, 255, 0.3); /* capa blanca translúcida */
+  }
+
+  html.dark .parallax-overlay {
+    background-color: transparent; /* sin overlay en dark */
+  }
+
+  @media (max-width: 768px) {
     .parallax-bg {
-      position: fixed;
-      top: 0;
-      left: 0;
-      z-index: -10;
-      width: 100%;
-      height: 100%;
-      background-image: url('/parallax.png'); /* asegúrate de que esté en la carpeta public/ */
-      background-attachment: fixed;
-      background-position: center;
-      background-repeat: no-repeat;
-      background-size: cover;
+      background-attachment: scroll;
     }
-  
-    /* Fallback para móviles donde background-attachment: fixed no funciona bien */
-    @media (max-width: 768px) {
-      .parallax-bg {
-        background-attachment: scroll;
-      }
-    }
-  </style>
-  
-  <div class="parallax-bg"></div>
-  
+  }
+</style>
+
+<!-- Imagen de fondo -->
+<div class="parallax-bg"></div>
+
+<!-- Capa translúcida para aclarar el fondo en modo light -->
+<div class="parallax-overlay"></div>

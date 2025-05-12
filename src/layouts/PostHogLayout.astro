@@ -39,6 +39,14 @@ const { description, title } = Astro.props;
       </script>
       <PostHog />
       <SpeedInsights />
+      <script>
+        (function () {
+          const userPref = localStorage.getItem('theme');
+          const systemPref = window.matchMedia('(prefers-color-scheme: dark)').matches;
+          const theme = userPref || (systemPref ? 'dark' : 'light');
+          document.documentElement.classList.add(theme);
+        })();
+      </script>
   </head>
 
   <body class="relative text-black dark:text-white">
@@ -79,6 +87,21 @@ const { description, title } = Astro.props;
       }
 
 .parallax {
+    background-image: url('/parallax.png');
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    text-align: center;
+    padding: 2rem;
+  }
+
+  parallax-light{
     background-image: url('/parallax.png');
     background-attachment: fixed;
     background-position: center;
