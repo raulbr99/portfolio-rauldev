@@ -33,7 +33,7 @@ const projects: Project[] = [
 		description:
 			"Blog sobre blockchain y criptomonedas con las últimas noticias.",
 		github: "https://github.com/raulbr99/bit2chain",
-		link: "https://bit2chain.example.com",
+		link: "https://bit2chain.vercel.app/",
 		image: "/projects/B2C.png",
 		tags: [
 			{ name: "Next.js", class: "bg-black text-white", icon: SiNextdotjs },
@@ -48,7 +48,7 @@ const projects: Project[] = [
 		title: "Locksy – Password Manager",
 		description: "Genera, guarda y consulta contraseñas seguras.",
 		github: "https://github.com/raulbr99/locksy",
-		link: "https://locksy.example.com",
+		link: "https://locksy.vercel.app/",
 		image: "/projects/logo_locksy.png",
 		tags: [
 			{ name: "Next.js", class: "bg-black text-white", icon: SiNextdotjs },
