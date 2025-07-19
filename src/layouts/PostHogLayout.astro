@@ -4,6 +4,7 @@ import PostHog from "../components/posthog.astro";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import SpeedInsights from "@vercel/speed-insights/astro";
+import ChatBot from "../components/ChatBot";
 
 interface Props {
 	title: string;
@@ -14,7 +15,7 @@ const { description, title } = Astro.props;
 ---
 
 <!doctype html>
-<html lang="es">
+<html lang="es" class="dark">
   <head>
     <meta charset="UTF-8" />
     <meta name="description" content={description} />
@@ -51,12 +52,13 @@ const { description, title } = Astro.props;
 
   <body class="relative text-black dark:text-white">
     <div
-      class="absolute top-0 bottom-0 z-[-2] min-h-screen w-full "
+      class="fixed top-0 left-0 z-[-2] h-full w-full"
     >
     </div>
     <Header />
     <slot />
     <Footer />
+    <ChatBot client:load />
     <style is:global>
       :root {
         color-scheme: light dark;
@@ -71,7 +73,19 @@ const { description, title } = Astro.props;
         display: flex;
         flex-direction: column;
         min-height: 100vh;
+        overflow-x: hidden;
         overscroll-behavior: none;
+      }
+
+      /* Hide scrollbar for Chrome, Safari and Opera */
+      ::-webkit-scrollbar {
+        display: none;
+      }
+
+      /* Hide scrollbar for IE, Edge and Firefox */
+      * {
+        -ms-overflow-style: none;  /* IE and Edge */
+        scrollbar-width: none;  /* Firefox */
       }
 
       @media (prefers-reduced-motion: reduce) {

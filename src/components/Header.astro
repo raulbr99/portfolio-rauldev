@@ -1,6 +1,4 @@
 ---  
-import ThemeToggle from "./ThemeToggle.astro";
-
 const navItems = [
 	{
 		title: "Inicio",
@@ -40,60 +38,154 @@ const navItems = [
 ];
 ---
 
-<header
-  class="fixed top-0 z-10 w-full flex items-center justify-center mx-auto mt-2"
->
-  <nav
-    class="flex px-3 text-sm font-medium rounded-full text-black dark:text-gray-200 justify-center items-center"
-  >
-    {navItems.map((link) => (
-      <a
-        class="relative block px-2 py-2 transition hover:text-blue-500 dark:hover:text-blue-400"
-        aria-label={link.label}
-        href={link.url}
-      >
-        {link.title}
-      </a>
-    ))}
-    <ThemeToggle />
-  </nav>
+<header class="fixed top-0 z-50 w-full bg-gray-900/80 backdrop-blur-md border-b border-gray-800 shadow-lg">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex items-center justify-between h-16">
+      <nav class="hidden md:flex items-center justify-center flex-1">
+        <div class="flex space-x-1 bg-gray-800/30 backdrop-blur-sm rounded-lg p-1">
+          {navItems.map((link) => (
+            <a
+              href={link.url}
+              class={`px-4 py-2 rounded-md text-sm font-medium transition-all duration-200 ${
+                link.label === 'inicio' 
+                  ? 'text-blue-400 bg-gray-700/50' 
+                  : 'text-gray-300 hover:bg-gray-700/30 hover:text-white'
+              }`}
+              aria-label={link.label}
+            >
+              {link.title}
+            </a>
+          ))}
+        </div>
+      </nav>
+
+      <!-- Mobile menu button -->
+      <div class="md:hidden">
+        <button
+          type="button"
+          id="mobile-menu-button"
+          class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none"
+          aria-controls="mobile-menu"
+          aria-expanded="false"
+        >
+          <span class="sr-only">Abrir menú</span>
+          <svg
+            class="block h-6 w-6"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            aria-hidden="true"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M4 6h16M4 12h16M4 18h16"
+            />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile menu -->
+  <div class="md:hidden hidden" id="mobile-menu">
+    <div class="px-2 pt-2 pb-3 space-y-1">
+      {navItems.map((link) => (
+        <a
+          href={link.url}
+          class={`block px-3 py-2 rounded-md text-base font-medium ${
+            link.label === 'inicio'
+              ? 'bg-gray-800 text-white'
+              : 'text-gray-300 hover:bg-gray-700 hover:text-white'
+          }`}
+          aria-label={link.label}
+        >
+          {link.title}
+        </a>
+      ))}
+    </div>
+  </div>
 </header>
 
 <script>
   document.addEventListener("astro:page-load", () => {
-    const sections = document.querySelectorAll("section")
-    const navItems = document.querySelectorAll("header nav a")
+    // Mobile menu toggle
+    const mobileMenuButton = document.getElementById('mobile-menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+    
+    if (mobileMenuButton && mobileMenu) {
+      mobileMenuButton.addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden');
+      });
+    }
 
-    const callback = (entries: any[]) => {
-      entries.forEach((entry: { isIntersecting: any; target: { id: string | null } }) => {
-        if (entry.isIntersecting) {
-          navItems.forEach((item) => {
-            if (item.getAttribute("aria-label") === entry.target.id) {
-              item.classList.add("text-blue-500")
-            } else {
-              item.classList.remove("text-blue-500")
+    const sections = document.querySelectorAll("section");
+    const navLinks = document.querySelectorAll("header nav a");
+
+    const updateActiveLink = () => {
+      const scrollPosition = window.scrollY + 100;
+      
+      sections.forEach(section => {
+        const sectionTop = section.offsetTop;
+        const sectionHeight = section.offsetHeight;
+        const sectionId = section.getAttribute('id');
+        
+        if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+          navLinks.forEach(link => {
+            const linkHref = link.getAttribute('href');
+            if (linkHref === `#${sectionId}` || linkHref === `/#${sectionId}`) {
+              // Remove active class from all links
+              navLinks.forEach(l => {
+                l.classList.remove('text-blue-400', 'bg-gray-700/50');
+                l.classList.add('text-gray-300');
+              });
+              // Add active class to current link
+              link.classList.add('text-blue-400', 'bg-gray-700/50');
+              link.classList.remove('text-gray-300');
             }
-          })
+          });
         }
-      })
-    }
+      });
+    };
 
-    const observer = new IntersectionObserver(callback, {
-      root: null,
-      rootMargin: "0px",
-      threshold: 0.3,
-    })
+    // Run on load and scroll
+    document.addEventListener('DOMContentLoaded', updateActiveLink);
+    window.addEventListener('scroll', updateActiveLink);
+    
+    // Also update on hash change (for direct URL access)
+    window.addEventListener('hashchange', updateActiveLink);
 
-    sections.forEach((section) => observer.observe(section))
+    // Close mobile menu when clicking on a link
+    navLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        if (mobileMenu) {
+          mobileMenu.classList.add('hidden');
+        }
+        // Update active state after a short delay to ensure scroll is complete
+        setTimeout(updateActiveLink, 100);
+      });
+    });
 
-    document.onvisibilitychange = () => {
-      if (document.visibilityState === "hidden") {
-        observer.disconnect()
-      } else {
-        sections.forEach((section) => observer.observe(section))
+    // Handle initial active state
+    const updateInitialState = () => {
+      if (window.location.hash) {
+        const targetSection = document.querySelector(window.location.hash);
+        if (targetSection) {
+          targetSection.scrollIntoView();
+        }
       }
+      setTimeout(updateActiveLink, 100);
+    };
+
+    // Run initial state after everything is loaded
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', updateInitialState);
+    } else {
+      updateInitialState();
     }
-  })
+  });
 </script>
 
 <style>
