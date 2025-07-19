@@ -11,7 +11,19 @@
            order-2 md:order-1 max-w-xl"
   >
     <p>
-      Mi nombre es <strong>Raúl Berna Riera</strong>. Empecé a programar hace 8 años jugando con <strong>Scratch</strong> y, hoy con 24 años, desarrollo sitios web full‑stack usando <strong>Next.js</strong> y <strong>Strapi</strong>.
+      Mi nombre es <strong>Raúl Berna Riera</strong>. Empecé a programar hace 8 años jugando con <strong>Scratch</strong> y, hoy con {
+        (() => {
+          const today = new Date();
+          const birthday = new Date(today.getFullYear(), 9, 6);
+          let edad = today.getFullYear() - 1999;
+          
+          if (today < birthday) {
+            edad--;
+          }
+          
+          return edad;
+        })()
+      } años, desarrollo sitios web full‑stack usando <strong>Next.js</strong> y <strong>Strapi</strong>.
     </p>
 
     <p>

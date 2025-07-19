@@ -38,25 +38,27 @@ const navItems = [
 ];
 ---
 
-<header class="fixed top-0 z-50 w-full bg-gray-900/80 backdrop-blur-md border-b border-gray-800 shadow-lg">
+<header class="fixed top-0 z-50 w-full bg-gray-900/95 backdrop-blur-md border-b border-gray-700 shadow-lg">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="flex items-center justify-between h-16">
-      <nav class="hidden md:flex items-center justify-center flex-1">
-        <div class="flex space-x-1 bg-gray-800/30 backdrop-blur-sm rounded-lg p-1">
-          {navItems.map((link) => (
-            <a
-              href={link.url}
-              class={`px-4 py-2 rounded-md text-sm font-medium transition-all duration-200 ${
-                link.label === 'inicio' 
-                  ? 'text-blue-400 bg-gray-700/50' 
-                  : 'text-gray-300 hover:bg-gray-700/30 hover:text-white'
-              }`}
-              aria-label={link.label}
-            >
-              {link.title}
-            </a>
-          ))}
-        </div>
+      <!-- Logo -->
+      <div class="flex-shrink-0">
+        <a href="/#inicio" class="text-white font-bold text-xl hover:text-blue-400 transition-colors">
+          Raúl Berna
+        </a>
+      </div>
+
+      <!-- Desktop Navigation -->
+      <nav class="hidden md:flex items-center space-x-1">
+        {navItems.map((link) => (
+          <a
+            href={link.url}
+            class="nav-link px-4 py-2 rounded-md text-sm font-medium transition-all duration-200 text-gray-300 hover:bg-gray-700/30 hover:text-white"
+            data-section={link.label}
+          >
+            {link.title}
+          </a>
+        ))}
       </nav>
 
       <!-- Mobile menu button -->
@@ -64,7 +66,7 @@ const navItems = [
         <button
           type="button"
           id="mobile-menu-button"
-          class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none"
+          class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none transition-colors"
           aria-controls="mobile-menu"
           aria-expanded="false"
         >
@@ -90,17 +92,21 @@ const navItems = [
   </div>
 
   <!-- Mobile menu -->
-  <div class="md:hidden hidden" id="mobile-menu">
+  <div class="md:hidden hidden bg-gray-900/95 backdrop-blur-md border-b border-gray-700" id="mobile-menu">
     <div class="px-2 pt-2 pb-3 space-y-1">
       {navItems.map((link) => (
         <a
           href={link.url}
-          class={`block px-3 py-2 rounded-md text-base font-medium ${
-            link.label === 'inicio'
-              ? 'bg-gray-800 text-white'
-              : 'text-gray-300 hover:bg-gray-700 hover:text-white'
-          }`}
-          aria-label={link.label}
+          class="mobile-nav-link block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white transition-colors"
+          data-section={link.label}
+          onclick="event.preventDefault(); 
+                  const targetId = this.getAttribute('href').replace('#', ''); 
+                  const target = document.getElementById(targetId); 
+                  if(target) { 
+                    target.scrollIntoView({behavior: 'smooth'}); 
+                    document.getElementById('mobile-menu').classList.add('hidden');
+                    document.getElementById('mobile-menu-button').setAttribute('aria-expanded', 'false');
+                  }"
         >
           {link.title}
         </a>
@@ -109,7 +115,7 @@ const navItems = [
   </div>
 </header>
 
-<script>
+<script is:inline>
   document.addEventListener("astro:page-load", () => {
     // Mobile menu toggle
     const mobileMenuButton = document.getElementById('mobile-menu-button');
@@ -117,73 +123,153 @@ const navItems = [
     
     if (mobileMenuButton && mobileMenu) {
       mobileMenuButton.addEventListener('click', () => {
-        mobileMenu.classList.toggle('hidden');
+        const isHidden = mobileMenu.classList.contains('hidden');
+        if (isHidden) {
+          mobileMenu.classList.remove('hidden');
+          mobileMenuButton.setAttribute('aria-expanded', 'true');
+        } else {
+          mobileMenu.classList.add('hidden');
+          mobileMenuButton.setAttribute('aria-expanded', 'false');
+        }
       });
     }
-
-    const sections = document.querySelectorAll("section");
-    const navLinks = document.querySelectorAll("header nav a");
-
-    const updateActiveLink = () => {
-      const scrollPosition = window.scrollY + 100;
+    
+    // Function to update active link based on scroll position
+    function updateActiveLink() {
+      const scrollY = window.scrollY;
+      const sections = document.querySelectorAll('section[id]');
+      const navLinks = document.querySelectorAll('.nav-link, .mobile-nav-link');
+      let currentSection = '';
       
+      // Find current section in view
       sections.forEach(section => {
-        const sectionTop = section.offsetTop;
+        const sectionTop = section.offsetTop - 100;
         const sectionHeight = section.offsetHeight;
         const sectionId = section.getAttribute('id');
         
-        if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
-          navLinks.forEach(link => {
-            const linkHref = link.getAttribute('href');
-            if (linkHref === `#${sectionId}` || linkHref === `/#${sectionId}`) {
-              // Remove active class from all links
-              navLinks.forEach(l => {
-                l.classList.remove('text-blue-400', 'bg-gray-700/50');
-                l.classList.add('text-gray-300');
-              });
-              // Add active class to current link
-              link.classList.add('text-blue-400', 'bg-gray-700/50');
-              link.classList.remove('text-gray-300');
-            }
-          });
+        if (scrollY >= sectionTop && scrollY < sectionTop + sectionHeight && sectionId) {
+          currentSection = sectionId;
         }
       });
-    };
-
-    // Run on load and scroll
-    document.addEventListener('DOMContentLoaded', updateActiveLink);
-    window.addEventListener('scroll', updateActiveLink);
-    
-    // Also update on hash change (for direct URL access)
-    window.addEventListener('hashchange', updateActiveLink);
-
-    // Close mobile menu when clicking on a link
-    navLinks.forEach(link => {
-      link.addEventListener('click', () => {
-        if (mobileMenu) {
-          mobileMenu.classList.add('hidden');
+      
+      // Update navigation links
+      navLinks.forEach(link => {
+        const linkHref = link.getAttribute('href');
+        if (!linkHref) return;
+        
+        const linkSection = linkHref.replace(/^[^#]*#/, '');
+        
+        if (linkSection === currentSection) {
+          link.classList.add('text-blue-400', 'bg-gray-700/50');
+          link.classList.remove('text-gray-300');
+        } else {
+          link.classList.remove('text-blue-400', 'bg-gray-700/50');
+          link.classList.add('text-gray-300');
         }
-        // Update active state after a short delay to ensure scroll is complete
-        setTimeout(updateActiveLink, 100);
+      });
+    }
+    
+    // Set up scroll event with throttling
+    let ticking = false;
+    window.addEventListener('scroll', () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          updateActiveLink();
+          ticking = false;
+        });
+        ticking = true;
+      }
+    });
+    
+    // Initial update
+    updateActiveLink();
+    
+    // Handle URL hash changes
+    window.addEventListener('hashchange', () => {
+      const hash = window.location.hash;
+      if (hash) {
+        const target = document.querySelector(hash);
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth' });
+        }
+      }
+    });
+    
+    // Initial scroll to hash if present
+    if (window.location.hash) {
+      const target = document.querySelector(window.location.hash);
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+    const handleScroll = () => {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          updateActiveLink();
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+    
+    // Event listeners
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener('resize', updateActiveLink);
+    
+    // Handle navigation clicks
+    navLinks.forEach((link: HTMLAnchorElement) => {
+      link.addEventListener('click', (e: Event) => {
+        e.preventDefault();
+        const href = link.getAttribute('href');
+        if (!href) return;
+        
+        const targetId = href.replace('/#', '').replace('#', '');
+        const targetSection = document.getElementById(targetId);
+        
+        if (targetSection) {
+          const headerHeight = 80; // Account for fixed header
+          const targetPosition = targetSection.offsetTop - headerHeight;
+          
+          window.scrollTo({
+            top: targetPosition,
+            behavior: 'smooth'
+          });
+          
+          // Close mobile menu if open
+          if (mobileMenu && !mobileMenu.classList.contains('hidden')) {
+            mobileMenu.classList.add('hidden');
+            if (mobileMenuButton) {
+              mobileMenuButton.setAttribute('aria-expanded', 'false');
+            }
+          }
+          
+          // Update URL hash
+          window.history.pushState(null, '', `#${targetId}`);
+          
+          // Update active link after scroll
+          setTimeout(updateActiveLink, 100);
+        }
       });
     });
 
-    // Handle initial active state
-    const updateInitialState = () => {
-      if (window.location.hash) {
-        const targetSection = document.querySelector(window.location.hash);
-        if (targetSection) {
-          targetSection.scrollIntoView();
-        }
+    // Initial setup
+    updateActiveLink();
+    
+    // Handle direct hash navigation
+    if (window.location.hash) {
+      const targetId = window.location.hash.replace('#', '');
+      const targetSection = document.getElementById(targetId);
+      if (targetSection) {
+        setTimeout(() => {
+          const headerHeight = 80;
+          const targetPosition = targetSection.offsetTop - headerHeight;
+          window.scrollTo({
+            top: targetPosition,
+            behavior: 'smooth'
+          });
+          setTimeout(updateActiveLink, 200);
+        }, 100);
       }
-      setTimeout(updateActiveLink, 100);
-    };
-
-    // Run initial state after everything is loaded
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', updateInitialState);
-    } else {
-      updateInitialState();
     }
   });
 </script>

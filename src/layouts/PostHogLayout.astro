@@ -24,6 +24,19 @@ const { description, title } = Astro.props;
     <link rel="sitemap" href="/sitemap-index.xml" />
     <link rel="stylesheet" href="/src/styles/global.css">
     <meta name="generator" content={Astro.generator} />
+    <!-- Open Graph / Facebook -->
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://rauldev.dev/" />
+<meta property="og:title" content="Raúl Berna - Desarrollador Full Stack" />
+<meta property="og:description" content="Portfolio personal de Raúl Berna, desarrollador Full Stack especializado en tecnologías modernas." />
+<meta property="og:image" content="https://rauldev.dev/parallax.png" />
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:url" content="https://rauldev.dev/" />
+<meta name="twitter:title" content="Raúl Berna - Desarrollador Full Stack" />
+<meta name="twitter:description" content="Portfolio personal de Raúl Berna, desarrollador Full Stack especializado en tecnologías modernas." />
+<meta name="twitter:image" content="https://rauldev.dev/parallax.png" />
     <title>{title}</title>
 
     <!-- Google tag (gtag.js) -->
